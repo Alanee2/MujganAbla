@@ -1,27 +1,96 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Müjgan Ablayı Neden Seviyoruz</title>
-<style>
-body {font-family:sans-serif; background:#f0f0f0; padding:20px;}
-h1 {color:#d6336c;}
-textarea,input{width:100%;margin-top:10px;padding:8px;border-radius:5px;border:1px solid #ccc;}
-button{margin-top:10px;padding:10px;background:#d6336c;color:white;border:none;border-radius:5px;cursor:pointer;}
-ul{list-style:none;padding:0;}
-li{background:white;padding:10px;margin-top:10px;border-radius:5px;}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Müjgan Ablayı Neden Seviyoruz</title>
+  <meta name="description" content="Herkes Müjgan Ablayı neden sevdiğini paylaşsın." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-1: #071025; --bg-2:#0a0f1a; --card:#0f1724; --accent1:#7c3aed; --accent2:#06b6d4; --glass: rgba(255,255,255,0.03);
+      --muted:#9aa4b2; --radius:14px; --maxw:1100px; --glass-2: rgba(255,255,255,0.02);
+      --glass-border: rgba(255,255,255,0.04);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,Arial; background:radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.12), transparent), radial-gradient(900px 400px at 90% 90%, rgba(6,182,212,0.08), transparent), linear-gradient(180deg,var(--bg-1),var(--bg-2)); color:#e6eef6; display:flex; align-items:center; justify-content:center; padding:28px;
+    }
+    .app{width:100%; max-width:var(--maxw); display:flex; gap:20px; align-items:flex-start}
+    .panel{flex:1; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:var(--radius); padding:20px; box-shadow:0 10px 40px rgba(2,6,23,0.6); border:1px solid var(--glass-border);}
+    header{display:flex; align-items:center; gap:16px; margin-bottom:12px}
+    .logo{width:64px; height:64px; border-radius:12px; background:linear-gradient(135deg,var(--accent1),var(--accent2)); display:flex; align-items:center; justify-content:center; font-weight:800; font-family:Poppins,Inter; font-size:20px; color:white; box-shadow:0 8px 30px rgba(11,22,40,0.6)}
+    h1{margin:0; font-size:20px}
+    p.lead{margin:0; color:var(--muted); font-size:13px}
+    form textarea{width:100%; min-height:140px; resize:vertical; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); border:1px solid var(--glass-border); color:inherit; padding:14px; border-radius:12px; font-size:14px; line-height:1.45}
+    .row{display:flex; gap:10px; margin-top:12px}
+    input[type=text]{flex:1; padding:10px 12px; border-radius:10px; border:1px solid var(--glass-border); background:transparent; color:inherit}
+    .btn{background:linear-gradient(90deg,var(--accent2),var(--accent1)); border:none; padding:10px 14px; border-radius:12px; cursor:pointer; color:white; font-weight:700; letter-spacing:0.2px; box-shadow:0 8px 30px rgba(12,18,30,0.5); transition:transform .12s ease, box-shadow .12s ease}
+    .btn:active{transform:translateY(1px)}
+    .muted{color:var(--muted); font-size:13px}
+    .small{font-size:12px}
+    .meta-row{display:flex; gap:8px; align-items:center; margin-top:14px}
+    .pill{padding:6px 10px; border-radius:999px; background:var(--glass-2); border:1px solid var(--glass-border); font-size:13px}
+    .sidebar{width:380px;}
+    .searchbar{display:flex; gap:8px; align-items:center}
+    .searchbar input{flex:1; padding:10px 12px; border-radius:10px; border:1px solid var(--glass-border); background:transparent}
+    select{padding:10px 12px; border-radius:10px; border:1px solid var(--glass-border); background:transparent}
+    .list{margin-top:12px; display:grid; gap:12px; max-height:62vh; overflow:auto; padding-right:6px}
+    .conf{padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.02); display:flex; gap:10px; align-items:flex-start; transition:transform .12s ease, box-shadow .12s ease}
+    .conf:hover{transform:translateY(-6px); box-shadow:0 18px 40px rgba(2,6,23,0.5)}
+    .meta{display:flex; justify-content:space-between; gap:8px; font-size:12px; color:var(--muted)}
+    .actions{display:flex; gap:8px}
+    .icon-btn{background:transparent; border:1px solid var(--glass-border); padding:6px 8px; border-radius:10px; cursor:pointer}
+    .empty{color:var(--muted); text-align:center; padding:18px}
+    .modal{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(2,6,23,0.6); z-index:60;}
+    .modal-card{width:min(720px,95%); background:linear-gradient(180deg,#071026,#081225); padding:20px; border-radius:16px; border:1px solid var(--glass-border)}
+    .close{margin-left:auto}
+    .toast{position:fixed; right:20px; bottom:20px; background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#021; padding:10px 14px; border-radius:10px; box-shadow:0 8px 30px rgba(12,18,30,0.6)}
+    @media (max-width:980px){ .app{flex-direction:column} .sidebar{width:100%} }
+  </style>
 </head>
 <body>
+<main class="app">
+<section class="panel">
+<header>
+<div class="logo">MÜ</div>
+<div>
 <h1>Müjgan Ablayı Neden Seviyoruz?</h1>
+<p class="lead">Herkes neden sevdiğini yazsın, anonim olsun.</p>
+</div>
+</header>
+
+<form id="confForm" autocomplete="off">
+<label for="text"><strong>Neden seviyorsunuz?</strong></label>
 <textarea id="text" placeholder="Sebebinizi yazın..."></textarea>
-<input id="author" placeholder="İsminiz (opsiyonel)">
-<button onclick="sendMessage()">Gönder</button>
 
-<ul id="messages"></ul>
+<div class="row">
+<input id="author" type="text" placeholder="Takma ad (opsiyonel)" />
+<button class="btn" type="submit">Gönder</button>
+</div>
 
-<!-- Firebase SDK -->
+<div class="meta-row">
+<div class="pill" id="count">0 cevap</div>
+</div>
+</form>
+</section>
+
+<aside class="panel sidebar">
+<div class="searchbar">
+<input id="q" placeholder="Ara..." />
+<select id="sort">
+<option value="new">Yeni</option>
+<option value="old">Eski</option>
+<option value="likes">Beğeni</option>
+</select>
+</div>
+
+<div id="list" class="list"></div>
+<div id="empty" class="empty">Henüz cevap yok. İlk siz yazın.</div>
+</aside>
+</main>
+
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
@@ -38,30 +107,62 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-function sendMessage(){
-  const text = document.getElementById("text").value.trim();
-  const author = document.getElementById("author").value.trim() || "Anon";
-  if(!text) return alert("Lütfen bir sebep yazın!");
-  const msg = {author,text,timestamp:Date.now()};
-  db.ref("messages").push(msg);
-  document.getElementById("text").value="";
-}
-
-function renderMessages(){
-  const list = document.getElementById("messages");
-  list.innerHTML="";
-  db.ref("messages").orderByChild("timestamp").on("value",snapshot=>{
-    list.innerHTML="";
-    snapshot.forEach(child=>{
-      const li = document.createElement("li");
-      const msg = child.val();
-      li.textContent = `${msg.author}: ${msg.text}`;
-      list.prepend(li);
-    });
+function uid(){return Math.random().toString(36).slice(2,9)}
+function now(){return Date.now()}
+function load(){
+  let arr = [];
+  db.ref("messages").orderByChild("timestamp").on("value", snapshot=>{
+    arr = [];
+    snapshot.forEach(child=>arr.push(child.val()));
+    render(arr);
   });
+  return arr;
 }
 
-renderMessages();
+function save(msg){
+  db.ref("messages").push(msg);
+}
+
+function render(arr){
+  const listEl = document.getElementById("list");
+  const countEl = document.getElementById("count");
+  const empty = document.getElementById("empty");
+  const q = document.getElementById("q");
+  const sort = document.getElementById("sort");
+
+  const query = q.value.trim().toLowerCase();
+  let visible = arr.filter(c => c.text.toLowerCase().includes(query) || (c.author||'').toLowerCase().includes(query));
+  if(sort.value==='new') visible.sort((a,b)=>b.ts-a.ts)
+  if(sort.value==='old') visible.sort((a,b)=>a.ts-b.ts)
+  if(sort.value==='likes') visible.sort((a,b)=>b.likes-a.likes)
+  listEl.innerHTML='';
+  if(visible.length===0){ empty.style.display='block'; countEl.textContent = arr.length + ' cevap'; return }
+  empty.style.display='none';
+  for(const c of visible){
+    const el = document.createElement('div'); el.className='conf';
+    el.innerHTML = `<div style="flex:1">
+      <div class="meta"><strong>${c.author||'Anon'}</strong><span>${new Date(c.ts).toLocaleString()}</span></div>
+      <div style="margin-top:8px; white-space:pre-wrap">${c.text}</div>
+    </div>`;
+    listEl.appendChild(el);
+  }
+  countEl.textContent = arr.length + ' cevap';
+}
+
+document.getElementById('confForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const text = document.getElementById('text').value.trim();
+  const author = document.getElementById('author').value.trim();
+  if(!text){ alert('Lütfen bir sebep yazın'); return }
+  save({id: uid(), text, author, ts: now(), likes:0});
+  document.getElementById('text').value='';
+  document.getElementById('author').value='';
+});
+
+document.getElementById('q').addEventListener('input', ()=>load());
+document.getElementById('sort').addEventListener('change', ()=>load());
+
+load();
 </script>
 </body>
 </html>
